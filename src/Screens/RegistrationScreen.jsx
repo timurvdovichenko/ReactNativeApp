@@ -1,5 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { ImageBackground, StyleSheet, Text, TextInput, View, Image } from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Image,
+  KeyboardAvoidingView,
+} from 'react-native';
 import backgroundImage from '../../assets/background.jpg';
 import { Button } from 'react-native-paper';
 import addAvatarIcon from '../../assets/addAvatarBtn.png';
@@ -21,11 +29,12 @@ export default function RegistrationScreen() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+      justifyContent: 'flex-end',
     },
 
     image: {
       flex: 1,
-      width: '100%',
+      // width: '100%',
       justifyContent: 'flex-end',
     },
 
@@ -134,57 +143,62 @@ export default function RegistrationScreen() {
   });
 
   return (
-    <View style={styles.container}>
+    <>
       <StatusBar style="auto" />
       <ImageBackground source={backgroundImage} style={styles.image}>
-        <View style={styles.formContainer}>
-          <View style={styles.avatarContainer}>
-            <Image source={addAvatarIcon} style={styles.addAvatarIcon} />
-          </View>
-          <Text style={styles.textMain}>Реєстрація</Text>
-          <View style={styles.formInput}>
-            <TextInput
-              style={styles.inputName}
-              placeholder="Логін"
-              inputMode="text"
-              placeholderTextColor={placeholderColor}
-              onFocus={() => setinputNameColorBordere(inputBorderColorFocus)}
-              onBlur={() => setinputNameColorBordere(inputBorderColor)}
-            />
-            <TextInput
-              style={styles.inputEmail}
-              placeholder="Адреса електронної пошти"
-              placeholderTextColor={placeholderColor}
-              inputMode="email"
-              onFocus={() => setinputEmailColorBordere(inputBorderColorFocus)}
-              onBlur={() => setinputEmailColorBordere(inputBorderColor)}
-            />
-            <TextInput
-              style={styles.inputPass}
-              placeholder="Пароль"
-              secureTextEntry={true}
-              placeholderTextColor={placeholderColor}
-              onFocus={() => setinputPassColorBordere(inputBorderColorFocus)}
-              onBlur={() => setinputPassColorBordere(inputBorderColor)}
-            />
-            <Button
-              mode="text"
-              textColor="#1B4371"
-              onPress={() => console.log('Pressed showpassword')}
-              style={styles.showPass}
-            >
-              Показати
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.container}
+        >
+          <View style={styles.formContainer}>
+            <View style={styles.avatarContainer}>
+              <Image source={addAvatarIcon} style={styles.addAvatarIcon} />
+            </View>
+            <Text style={styles.textMain}>Реєстрація</Text>
+            <View style={styles.formInput}>
+              <TextInput
+                style={styles.inputName}
+                placeholder="Логін"
+                inputMode="text"
+                placeholderTextColor={placeholderColor}
+                onFocus={() => setinputNameColorBordere(inputBorderColorFocus)}
+                onBlur={() => setinputNameColorBordere(inputBorderColor)}
+              />
+              <TextInput
+                style={styles.inputEmail}
+                placeholder="Адреса електронної пошти"
+                placeholderTextColor={placeholderColor}
+                inputMode="email"
+                onFocus={() => setinputEmailColorBordere(inputBorderColorFocus)}
+                onBlur={() => setinputEmailColorBordere(inputBorderColor)}
+              />
+              <TextInput
+                style={styles.inputPass}
+                placeholder="Пароль"
+                secureTextEntry={true}
+                placeholderTextColor={placeholderColor}
+                onFocus={() => setinputPassColorBordere(inputBorderColorFocus)}
+                onBlur={() => setinputPassColorBordere(inputBorderColor)}
+              />
+              <Button
+                mode="text"
+                textColor="#1B4371"
+                onPress={() => console.log('Pressed showpassword')}
+                style={styles.showPass}
+              >
+                Показати
+              </Button>
+            </View>
+
+            <Button mode="contained" style={styles.submitBtn}>
+              Зареєструватися
+            </Button>
+            <Button mode="text" textColor="#1B4371" style={styles.allreadyHaveLogin}>
+              Вже є акаунт? Увійти
             </Button>
           </View>
-
-          <Button mode="contained" style={styles.submitBtn}>
-            Зареєструватися
-          </Button>
-          <Button mode="text" textColor="#1B4371" style={styles.allreadyHaveLogin}>
-            Вже є акаунт? Увійти
-          </Button>
-        </View>
+        </KeyboardAvoidingView>
       </ImageBackground>
-    </View>
+    </>
   );
 }

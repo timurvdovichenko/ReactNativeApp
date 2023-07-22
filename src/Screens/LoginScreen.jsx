@@ -1,11 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import { ImageBackground, StyleSheet, Text, TextInput, View, Image } from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Image,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import backgroundImage from '../../assets/background.jpg';
 import { Button } from 'react-native-paper';
 import addAvatarIcon from '../../assets/addAvatarBtn.png';
 import { useState } from 'react';
 
 export default function LoginScreen() {
+  console.log('Platform.OS :>> ', Platform.OS);
   const inputBorderColor = '#E8E8E8';
 
   const placeholderColor = '#BDBDBD';
@@ -20,16 +30,17 @@ export default function LoginScreen() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+      justifyContent: 'flex-end',
     },
 
     image: {
       flex: 1,
-      width: '100%',
+      // width: '100%',
       justifyContent: 'flex-end',
     },
 
     textMain: {
-      fontFamily: 'Roboto',
+      // fontFamily: 'Roboto',
       fontSize: 30,
       fontWeight: 'bold',
       letterSpacing: 0.01,
@@ -57,7 +68,7 @@ export default function LoginScreen() {
 
     formContainer: {
       width: '100%',
-      height: '60%',
+      height: '65%',
       backgroundColor: 'white',
       borderTopRightRadius: 25,
       borderTopLeftRadius: 25,
@@ -121,46 +132,52 @@ export default function LoginScreen() {
   });
 
   return (
-    <View style={styles.container}>
+    <>
       <StatusBar style="auto" />
       <ImageBackground source={backgroundImage} style={styles.image}>
-        <View style={styles.formContainer}>
-          <Text style={styles.textMain}>Увійти</Text>
-          <View style={styles.formInput}>
-            <TextInput
-              style={styles.inputEmail}
-              placeholder="Адреса електронної пошти"
-              placeholderTextColor={placeholderColor}
-              inputMode="email"
-              onFocus={() => setinputEmailColorBordere(inputBorderColorFocus)}
-              onBlur={() => setinputEmailColorBordere(inputBorderColor)}
-            />
-            <TextInput
-              style={styles.inputPass}
-              placeholder="Пароль"
-              secureTextEntry={true}
-              placeholderTextColor={placeholderColor}
-              onFocus={() => setinputPassColorBordere(inputBorderColorFocus)}
-              onBlur={() => setinputPassColorBordere(inputBorderColor)}
-            />
-            <Button
-              mode="text"
-              textColor="#1B4371"
-              onPress={() => console.log('Pressed showpassword')}
-              style={styles.showPass}
-            >
-              Показати
-            </Button>
-          </View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.container}
+        >
+          <View style={styles.formContainer}>
+            <Text style={styles.textMain}>Увійти</Text>
+            <View style={styles.formInput}>
+              <TextInput
+                style={styles.inputEmail}
+                placeholder="Адреса електронної пошти"
+                placeholderTextColor={placeholderColor}
+                inputMode="email"
+                onFocus={() => setinputEmailColorBordere(inputBorderColorFocus)}
+                onBlur={() => setinputEmailColorBordere(inputBorderColor)}
+              />
+              <TextInput
+                style={styles.inputPass}
+                placeholder="Пароль"
+                secureTextEntry={true}
+                placeholderTextColor={placeholderColor}
+                onFocus={() => setinputPassColorBordere(inputBorderColorFocus)}
+                onBlur={() => setinputPassColorBordere(inputBorderColor)}
+              />
+              <Button
+                mode="text"
+                textColor="#1B4371"
+                onPress={() => console.log('Pressed showpassword')}
+                style={styles.showPass}
+              >
+                Показати
+              </Button>
+            </View>
 
-          <Button mode="contained" style={styles.submitBtn}>
-            Увійти
-          </Button>
-          <Button mode="text" textColor="#1B4371" style={styles.allreadyHaveLogin}>
-            Немає акаунту? <Text style={styles.submitBtnText}>Зареєструватися</Text>
-          </Button>
-        </View>
+            <Button mode="contained" style={styles.submitBtn}>
+              Увійти
+            </Button>
+            <Button mode="text" textColor="#1B4371" style={styles.allreadyHaveLogin}>
+              Немає акаунту? <Text style={styles.submitBtnText}>Зареєструватися</Text>
+            </Button>
+            {/* </KeyboardAvoidingView> */}
+          </View>
+        </KeyboardAvoidingView>
       </ImageBackground>
-    </View>
+    </>
   );
 }
