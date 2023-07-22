@@ -6,16 +6,14 @@ import {
   TextInput,
   View,
   Image,
-  Platform,
   KeyboardAvoidingView,
+  Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 import backgroundImage from '../../assets/background.jpg';
-import { Button } from 'react-native-paper';
-import addAvatarIcon from '../../assets/addAvatarBtn.png';
 import { useState } from 'react';
 
-export default function LoginScreen() {
-  console.log('Platform.OS :>> ', Platform.OS);
+export default function RegistrationScreen() {
   const inputBorderColor = '#E8E8E8';
 
   const placeholderColor = '#BDBDBD';
@@ -25,8 +23,8 @@ export default function LoginScreen() {
   const mainTextColor = '#212121';
   const avatarBackgroundColor = '#F6F6F6';
 
-  const [inputEmailColorBorder, setinputEmailColorBordere] = useState(inputBorderColor);
-  const [inputPassColorBorder, setinputPassColorBordere] = useState(inputBorderColor);
+  const [inputEmailColorBorder, setinputEmailColorBorder] = useState(inputBorderColor);
+  const [inputPassColorBorder, setinputPassColorBorder] = useState(inputBorderColor);
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -40,7 +38,7 @@ export default function LoginScreen() {
     },
 
     textMain: {
-      // fontFamily: 'Roboto',
+      fontFamily: 'Roboto',
       fontSize: 30,
       fontWeight: 'bold',
       letterSpacing: 0.01,
@@ -68,12 +66,13 @@ export default function LoginScreen() {
 
     formContainer: {
       width: '100%',
-      height: '65%',
+      height: '70%',
       backgroundColor: 'white',
       borderTopRightRadius: 25,
       borderTopLeftRadius: 25,
-      paddingTop: 32,
+      paddingTop: 92,
       paddingHorizontal: 16,
+      paddingBottom: 32,
     },
 
     formInput: {
@@ -98,7 +97,7 @@ export default function LoginScreen() {
       borderWidth: 1,
       borderColor: inputPassColorBorder,
       borderRadius: 10,
-      marginBottom: 16,
+
       backgroundColor: backgroundColorInput,
       paddingLeft: 20,
 
@@ -108,27 +107,35 @@ export default function LoginScreen() {
     },
     showPass: {
       position: 'absolute',
-      right: 4,
-      bottom: 22,
+      right: 16,
+      bottom: 15,
       fontSize: 16,
       fontStyle: 'normal',
       fontWeight: 'regular',
+      color: '#1B4371',
     },
     submitBtn: {
       backgroundColor: submitButtonColor,
       height: 51,
       marginHorizontal: 16,
       justifyContent: 'center',
-      marginTop: 27,
+      alignItems: 'center',
+
+      marginTop: 43,
+      marginBottom: 16,
 
       borderRadius: 100,
-
+    },
+    submitBtnText: {
+      color: '#F6F6F6',
       fontSize: 16,
       fontStyle: 'normal',
       fontWeight: 'regular',
     },
-    submitBtnText: { textDecorationLine: 'underline' },
-    allreadyHaveLogin: { marginTop: 4 },
+
+    thereIsNoLogin: { marginTop: 4, alignItems: 'center', justifyContent: 'center' },
+    thereIsNoLoginText: { color: '#1B4371' },
+    thereIsNoLoginTextAdditional: { textDecorationLine: 'underline' },
   });
 
   return (
@@ -147,34 +154,48 @@ export default function LoginScreen() {
                 placeholder="Адреса електронної пошти"
                 placeholderTextColor={placeholderColor}
                 inputMode="email"
-                onFocus={() => setinputEmailColorBordere(inputBorderColorFocus)}
-                onBlur={() => setinputEmailColorBordere(inputBorderColor)}
+                onFocus={() => setinputEmailColorBorder(inputBorderColorFocus)}
+                onBlur={() => {
+                  setinputEmailColorBorder(inputBorderColor);
+                }}
               />
               <TextInput
                 style={styles.inputPass}
                 placeholder="Пароль"
                 secureTextEntry={true}
                 placeholderTextColor={placeholderColor}
-                onFocus={() => setinputPassColorBordere(inputBorderColorFocus)}
-                onBlur={() => setinputPassColorBordere(inputBorderColor)}
+                onFocus={() => setinputPassColorBorder(inputBorderColorFocus)}
+                onBlur={() => {
+                  setinputPassColorBorder(inputBorderColor);
+                }}
               />
-              <Button
-                mode="text"
-                textColor="#1B4371"
-                onPress={() => console.log('Pressed showpassword')}
+
+              <Text
+                onPress={() => {
+                  console.log('Pressed showpassword');
+                }}
                 style={styles.showPass}
               >
                 Показати
-              </Button>
+              </Text>
             </View>
 
-            <Button mode="contained" style={styles.submitBtn}>
-              Увійти
-            </Button>
-            <Button mode="text" textColor="#1B4371" style={styles.allreadyHaveLogin}>
-              Немає акаунту? <Text style={styles.submitBtnText}>Зареєструватися</Text>
-            </Button>
-            {/* </KeyboardAvoidingView> */}
+            <TouchableOpacity
+              style={styles.submitBtn}
+              activeOpacity={0.8}
+              onPress={() => {
+                console.log('Pressed Submit BTn');
+                Keyboard.dismiss();
+              }}
+            >
+              <Text style={styles.submitBtnText}> Увійти</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.thereIsNoLogin} activeOpacity={0.8}>
+              <Text style={styles.thereIsNoLoginText}>
+                Немає акаунту?
+                <Text style={styles.thereIsNoLoginTextAdditional}>Зареєструватися</Text>{' '}
+              </Text>
+            </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
       </ImageBackground>
