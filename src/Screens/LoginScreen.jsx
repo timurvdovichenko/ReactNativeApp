@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import {
   ImageBackground,
   StyleSheet,
@@ -23,8 +22,12 @@ export default function RegistrationScreen() {
   const mainTextColor = '#212121';
   const avatarBackgroundColor = '#F6F6F6';
 
+  const formInitialState = { email: '', password: '' };
+
   const [inputEmailColorBorder, setinputEmailColorBorder] = useState(inputBorderColor);
   const [inputPassColorBorder, setinputPassColorBorder] = useState(inputBorderColor);
+  const [stateForm, setStateForm] = useState(formInitialState);
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -139,66 +142,67 @@ export default function RegistrationScreen() {
   });
 
   return (
-    <>
-      <StatusBar style="auto" />
-      <ImageBackground source={backgroundImage} style={styles.image}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.container}
-        >
-          <View style={styles.formContainer}>
-            <Text style={styles.textMain}>Увійти</Text>
-            <View style={styles.formInput}>
-              <TextInput
-                style={styles.inputEmail}
-                placeholder="Адреса електронної пошти"
-                placeholderTextColor={placeholderColor}
-                inputMode="email"
-                onFocus={() => setinputEmailColorBorder(inputBorderColorFocus)}
-                onBlur={() => {
-                  setinputEmailColorBorder(inputBorderColor);
-                }}
-              />
-              <TextInput
-                style={styles.inputPass}
-                placeholder="Пароль"
-                secureTextEntry={true}
-                placeholderTextColor={placeholderColor}
-                onFocus={() => setinputPassColorBorder(inputBorderColorFocus)}
-                onBlur={() => {
-                  setinputPassColorBorder(inputBorderColor);
-                }}
-              />
-
-              <Text
-                onPress={() => {
-                  console.log('Pressed showpassword');
-                }}
-                style={styles.showPass}
-              >
-                Показати
-              </Text>
-            </View>
-
-            <TouchableOpacity
-              style={styles.submitBtn}
-              activeOpacity={0.8}
-              onPress={() => {
-                console.log('Pressed Submit BTn');
-                Keyboard.dismiss();
+    <ImageBackground source={backgroundImage} style={styles.image}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}
+      >
+        <View style={styles.formContainer}>
+          <Text style={styles.textMain}>Увійти</Text>
+          <View style={styles.formInput}>
+            <TextInput
+              style={styles.inputEmail}
+              placeholder="Адреса електронної пошти"
+              placeholderTextColor={placeholderColor}
+              inputMode="email"
+              onChangeText={value => setStateForm(prevState => ({ ...prevState, email: value }))}
+              onFocus={() => setinputEmailColorBorder(inputBorderColorFocus)}
+              onBlur={() => {
+                setinputEmailColorBorder(inputBorderColor);
               }}
+            />
+            <TextInput
+              style={styles.inputPass}
+              placeholder="Пароль"
+              secureTextEntry={true}
+              placeholderTextColor={placeholderColor}
+              onChangeText={value => setStateForm(prevState => ({ ...prevState, password: value }))}
+              onFocus={() => setinputPassColorBorder(inputBorderColorFocus)}
+              onBlur={() => {
+                setinputPassColorBorder(inputBorderColor);
+              }}
+            />
+
+            <Text
+              onPress={() => {
+                console.log('Pressed showpassword');
+              }}
+              style={styles.showPass}
             >
-              <Text style={styles.submitBtnText}> Увійти</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.thereIsNoLogin} activeOpacity={0.8}>
-              <Text style={styles.thereIsNoLoginText}>
-                Немає акаунту?
-                <Text style={styles.thereIsNoLoginTextAdditional}>Зареєструватися</Text>{' '}
-              </Text>
-            </TouchableOpacity>
+              Показати
+            </Text>
           </View>
-        </KeyboardAvoidingView>
-      </ImageBackground>
-    </>
+
+          <TouchableOpacity
+            style={styles.submitBtn}
+            activeOpacity={0.8}
+            onPress={() => {
+              // console.log('Pressed Submit BTn');
+              Keyboard.dismiss();
+              console.log('Email is', stateForm.email);
+              console.log('Password is', stateForm.password);
+            }}
+          >
+            <Text style={styles.submitBtnText}> Увійти</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.thereIsNoLogin} activeOpacity={0.8}>
+            <Text style={styles.thereIsNoLoginText}>
+              Немає акаунту?<Text> </Text>
+              <Text style={styles.thereIsNoLoginTextAdditional}>Зареєструватися</Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 }
